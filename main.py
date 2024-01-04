@@ -1,30 +1,17 @@
 from requests import get
+from bs4 import BeautifulSoup
 
-websites = (
-    "google.com",
-    "httpstat.us/502",
-    "httpstat.us/404",
-    "httpstat.us/300",
-    "httpstat.us/200",
-    "httpstat.us/101",
-)
+base_url = "https://weworkremotely.com/remote-jobs/search?search_uuid=&term="
+search_term = "python"
 
-results = {}
-
-for website in websites:
-  if not website.startswith("https://"):
-    website = f"https://{website}"
-  response = get(website)
-  code = response.status_code
-  if code >= 500:
-    results[website] = "5xx/ server error"
-  elif code >= 400:
-    results[website] = "4xx / client error"
-  elif code >= 300:
-    results[website] = "3xx / redirection"
-  elif code >= 200:
-    results[website] = "2xx / successful"
-  elif code >= 100:
-    results[website] = "1xx / informational response"
-  
-print(results)
+response = get(f"{base_url}{search_term}")
+if response.status_code != 200:
+    print("Can't request website")
+else:
+    soup = BeautifulSoup(response.text, "html.parser")
+    jobs = soup.find_all('section', class_="jobs")
+    for job_section in jobs:
+        job_posts = job_section.find_all('li')
+        job_posts.pop(-1)
+        for post in job_posts:
+            print(post)
