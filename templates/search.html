@@ -1,27 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
     <title>Job Scrapper</title>
   </head>
-  <body
-    style="
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    "
-  >
-    <h1>Search Results for "{{keyword}}" :</h1>
-    {% for job in jobs %}
-    <div>
-      <span>{{job.position}}</span>
-      <span>{{job.company}}</span>
-      <span>{{job.location}}</span>
-      <a href="{{job.link}}" target="_blank">Apply now &rarr;</a>
-    </div>
-    {% endfor %}
+  <body>
+    <main class="container">
+      <h1>Search Results for "{{keyword}}" :</h1>
+      <figure>
+        <table role="grid">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in jobs %}
+            <tr>
+              <td>{{job.position}}</td>
+              <td>{{job.company}}</td>
+              <td>{{job.location}}</td>
+              <td>
+                <a href="{{job.link}}" target="_blank">Apply now &rarr;</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </figure>
+    </main>
   </body>
 </html>
