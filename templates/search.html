@@ -23,10 +23,11 @@
               <th>Company</th>
               <th>Location</th>
               <th>Link</th>
+              <th>Website</th>
             </tr>
           </thead>
           <tbody>
-            {% for job in jobs %}
+            {% for job in jobs %} {%if job.position is not none %}
             <tr>
               <td>{{job.position}}</td>
               <td>{{job.company}}</td>
@@ -34,8 +35,9 @@
               <td>
                 <a href="{{job.link}}" target="_blank">Apply now &rarr;</a>
               </td>
+              <td>{{job.site}}</td>
             </tr>
-            {% endfor %}
+            {% endif %} {% endfor %}
           </tbody>
         </table>
       </figure>
